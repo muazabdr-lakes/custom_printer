@@ -15,7 +15,6 @@ import android.os.Looper
 import android.os.Message
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.sersoluciones.flutter_pos_printer_platform.bluetooth.BluetoothConnection
@@ -184,7 +183,6 @@ class FlutterPosPrinterPlatformPlugin : FlutterPlugin, MethodCallHandler,
         adapter.setHandler(null)
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, methodChannel)
         channel.setMethodCallHandler(this)

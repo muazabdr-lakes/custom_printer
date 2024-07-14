@@ -6,16 +6,20 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.hardware.usb.*
-import android.os.Build
+import android.hardware.usb.UsbConstants
+import android.hardware.usb.UsbDevice
+import android.hardware.usb.UsbDeviceConnection
+import android.hardware.usb.UsbEndpoint
+import android.hardware.usb.UsbInterface
+import android.hardware.usb.UsbManager
 import android.os.Handler
 import android.util.Base64
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.sersoluciones.flutter_pos_printer_platform.R
 import java.nio.charset.Charset
-import java.util.*
+import java.util.Arrays
+import java.util.Vector
 
 class USBPrinterService private constructor(private var mHandler: Handler?) {
     private var mContext: Context? = null
@@ -69,7 +73,6 @@ class USBPrinterService private constructor(private var mHandler: Handler?) {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     fun init(reactContext: Context?) {
         mContext = reactContext
         mUSBManager = mContext!!.getSystemService(Context.USB_SERVICE) as UsbManager
@@ -82,7 +85,7 @@ class USBPrinterService private constructor(private var mHandler: Handler?) {
         }
         val filter = IntentFilter(ACTION_USB_PERMISSION)
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
-        mContext!!.registerReceiver(mUsbDeviceReceiver, filter, Context.RECEIVER_NOT_EXPORTED)
+        mContext!!.registerReceiver(mUsbDeviceReceiver, filter, Context.RECEIVER_EXPORTED)
         Log.v(LOG_TAG, "ESC/POS Printer initialized")
     }
 
