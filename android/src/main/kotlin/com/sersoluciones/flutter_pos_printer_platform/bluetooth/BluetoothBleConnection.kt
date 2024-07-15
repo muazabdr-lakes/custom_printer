@@ -60,16 +60,13 @@ class BluetoothBleConnection(
                 val bluetoothGattCallback = ResponseBluetoothGattCallback(result)
 
                 // connect to the GATT server on the device
-                bluetoothGatt = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                bluetoothGatt =
                     device.connectGatt(
                         mContext,
                         autoConnect,
                         bluetoothGattCallback,
                         BluetoothDevice.TRANSPORT_LE
                     )
-                } else {
-                    device.connectGatt(mContext, autoConnect, bluetoothGattCallback)
-                }
 
                 // Send the name of the connected device back to the UI Activity
                 val msg = mHandler.obtainMessage(BluetoothConstants.MESSAGE_DEVICE_NAME)
